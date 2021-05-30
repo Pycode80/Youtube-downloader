@@ -5,7 +5,7 @@ import os
 
 
 
-os.chdir("C:/Users/Illiès/Desktop")
+os.chdir("C:/Users/yourusername/Desktop")
 
 Art = text2art("Youtube   Downloader")
 print(Art)
@@ -64,7 +64,7 @@ Make a choice :  """)
         print("Loading ...")
         pl = Playlist(url)
         os.mkdir("Playlist")
-        os.chdir("C:/Users/Illiès/Desktop/Playlist")
+        os.chdir("C:/Users/yourusername/Desktop/Playlist")
         for yt in pl.videos:
             out_file = yt.streams.filter(only_audio=True).first().download()
             base, ext = os.path.splitext(out_file)
