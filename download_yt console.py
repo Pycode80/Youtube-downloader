@@ -2,13 +2,23 @@ from art import *
 from pytube import YouTube
 from pytube import Playlist
 import os
+from time import sleep
+from tqdm import tqdm
+
+
+def barre(temps):
+    for i in tqdm(range(10)):
+        sleep(temps)
 
 
 
-os.chdir("C:/Users/yourusername/Desktop")
 
 Art = text2art("Youtube   Downloader")
 print(Art)
+
+output = str(input("Enter the output folder : "))
+
+os.chdir(output)
 
 choix = input("""
 1. Download A Video
@@ -22,26 +32,23 @@ if choix == "1":
 Make a choice :  """)
     if genre == "1":
         url = input("Enter your url : ")
-        print("Loading ...")
+        barre(1.5)
         YouTube(url).streams.first().download()
         print("Download complete")
-        quit
+        exit
 
 
     if genre == "2":
         url = input("\nEnter your url : ")
-        print("Loading ...")
         yt=YouTube(url)
         t = yt.streams.filter(only_audio=True)
+        barre(1.5)
         out_file = t[0].download()
         base, ext = os.path.splitext(out_file)
         new_file = base + '.mp3'
         os.rename(out_file, new_file)
         print("Download complete")
-        quit
-    else:
-        print("You are crazy, you asked for an option that does not exist.")
-
+        exit
 
 if choix =="2":
     genre = input("""\n1. Download the Video and the audio
@@ -52,11 +59,11 @@ Make a choice :  """)
         print("Loading ...")
         playlist = Playlist(url)
         os.mkdir("Playlist")
-        os.chdir("C:/Users/Illiès/Desktop/Playlist")
+        os.chdir(output + "/Playlist")
         print('Number of videos in playlist: %s' % len(playlist.video_urls))
         playlist.download_all()
         print("Download complete")
-        quit
+        exit
 
 
     if genre == "2":
@@ -64,20 +71,14 @@ Make a choice :  """)
         print("Loading ...")
         pl = Playlist(url)
         os.mkdir("Playlist")
-        os.chdir("C:/Users/yourusername/Desktop/Playlist")
+        os.chdir(output + "/Playlist")
         for yt in pl.videos:
             out_file = yt.streams.filter(only_audio=True).first().download()
             base, ext = os.path.splitext(out_file)
             new_file = base + '.mp3'
             os.rename(out_file, new_file)
         print("Download complete")
-        quit
-    else:
-        print("You are crazy, you asked for an option that does not exist.")
-        quit
+        exit
 
-else:
-    print("You are crazy, you asked for an option that does not exist.")
-    quit
 
 
